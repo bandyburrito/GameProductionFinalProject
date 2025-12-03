@@ -18,7 +18,7 @@ public class bulletShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += transform.up * bulletspeed * Time.fixedDeltaTime;   
+        transform.position += transform.forward * bulletspeed * Time.fixedDeltaTime;   
     }
 
     private void OnCollisionEnter(Collision collision)
