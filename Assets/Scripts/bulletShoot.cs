@@ -3,7 +3,7 @@ using UnityEngine;
 public class bulletShoot : MonoBehaviour
 {
 
-    [SerializeField] public float bulletspeed = 20f;
+    [SerializeField] public float bulletspeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,9 +18,8 @@ public class bulletShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-    transform.position += transform.up * bulletspeed * Time.fixedDeltaTime;   
+        transform.position += transform.up * bulletspeed * Time.fixedDeltaTime;   
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
