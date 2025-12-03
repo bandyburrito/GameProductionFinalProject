@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     private bool isJumping;
     public int GroundSlamSpeed = 10000;
     private bool CanSlam;
+    private 
 
 
 
@@ -51,6 +52,8 @@ public class Movement : MonoBehaviour
         {
             Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
             transform.position += transform.right * 10f * Time.deltaTime;
+
+            
         }
 
         CanSlam = isGrounded == false && isJumping == true;
@@ -86,6 +89,19 @@ public class Movement : MonoBehaviour
             isJumping = true;
         }
     }
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+           
+        }
+    }
+
+    
+
     
     
 }

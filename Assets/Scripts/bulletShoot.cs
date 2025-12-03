@@ -20,4 +20,16 @@ public class bulletShoot : MonoBehaviour
     {
     transform.position += transform.up * bulletspeed * Time.fixedDeltaTime;   
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
 }
