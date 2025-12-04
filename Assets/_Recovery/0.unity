@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyScript
   character: {fileID: 1435200260}
-  enemyMoveSpeed: 15
+  enemyMoveSpeed: 10
 --- !u!4 &669721531 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2380746635988135657, guid: fa9cffaa8313cfd43b5f34f7c6966d0e, type: 3}
@@ -1013,7 +1013,7 @@ MonoBehaviour:
   GunBullet: {fileID: 5329676255436359906, guid: d5d72716437f9e84f933505b519feb67, type: 3}
   GunSpawn: {fileID: 1392577380}
   GroundSlamSpeed: 300000
-  gravMultiplier: 15
+  gravMultiplier: 20
 --- !u!4 &1577189524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2380746635988135657, guid: fa9cffaa8313cfd43b5f34f7c6966d0e, type: 3}

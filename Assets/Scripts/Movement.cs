@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
     private bool isJumping;
     public int GroundSlamSpeed = 10000;
     private bool CanSlam;
-    private 
+    public float gravMultiplier;
 
 
 
@@ -46,6 +46,11 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+        }
+
+        if (rb.linearVelocity.y<0)
+        {
+            rb.AddForce(Vector3.down * gravMultiplier * Time.deltaTime, ForceMode.Impulse);
         }
 
         if (Input.GetMouseButtonDown(0))

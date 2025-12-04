@@ -3,17 +3,20 @@ using UnityEngine;
 public class enemydeath : MonoBehaviour
 {
     public int MaxHP = 100;
-    public int CurrentHP = 100;
-    public int DamageTaken = 0;
+    private int CurrentHP;
+    private int DamageTaken = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        CurrentHP = MaxHP;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+
+        CurrentHP = MaxHP - DamageTaken;
+
         if (CurrentHP==0)
         {
             Destroy(gameObject);
@@ -24,7 +27,7 @@ public class enemydeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            CurrentHP -= 50;
+            DamageTaken += 50;
         }
     }
 
