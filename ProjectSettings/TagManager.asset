@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Undefined
+  - Shotgun
   layers:
   - Default
   - TransparentFX

@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
-            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -67,7 +67,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.deltaTime);
+        rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.fixedDeltaTime);
 
         
     }
@@ -92,13 +92,7 @@ public class Movement : MonoBehaviour
 
 
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-           
-        }
-    }
+    
 
     
 

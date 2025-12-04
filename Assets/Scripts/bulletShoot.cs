@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class bulletShoot : MonoBehaviour
@@ -18,17 +19,28 @@ public class bulletShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-    transform.position += transform.up * bulletspeed * Time.fixedDeltaTime;   
+    transform.position += transform.up * bulletspeed * Time.fixedDeltaTime ;   
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
+        if(collision.gameObject.CompareTag("Ground"))
+        {             
+            Destroy(gameObject);
+        }
+
+        if(collision.gameObject.CompareTag("Enemy"))
+        {             
             Destroy(gameObject);
         }
     }
+
+
+    
+
+
+    
 
 
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2450826568082146356}
   m_Layer: 0
   m_Name: ShotgunBullet
-  m_TagString: Untagged
+  m_TagString: Shotgun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5329676255436359906}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.7289224, y: 2.8, z: 3.3370867}
+  m_LocalPosition: {x: 6.7289224, y: 2.8, z: 3.522}
   m_LocalScale: {x: 0.21508612, y: 0.28750235, z: 0.15590101}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58,7 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
+  m_RayTracingMode: 1
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
@@ -110,8 +110,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.61
+  m_Height: 2.0000005
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2450826568082146356
@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bb42f8c8ea2974588a82af77a3e84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  bulletspeed: 100
+  bulletspeed: 10

@@ -2,20 +2,46 @@ using UnityEngine;
 
 public class enemydeath : MonoBehaviour
 {
-    public int MaxHP = 100;
-    public int CurrentHP;
-    public int DamageTaken = 33;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public float EnemyHP = 100;
+    public float DamageTaken = 35;
+
+    
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
-   
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Shotgun"))
+        {
+            EnemyHP -= DamageTaken;
+            Debug.Log("Enemy HP: " + EnemyHP);
+
+
+            if (EnemyHP <= 0)
+            {
+                Destroy(gameObject);
+                Debug.Log("Enemy Destroyed");
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
