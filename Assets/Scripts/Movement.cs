@@ -16,7 +16,8 @@ public class Movement : MonoBehaviour
     public int GroundSlamSpeed = 10000;
     private bool CanSlam;
     public float gravMultiplier;
-
+    public float maxHP;
+    public float damageTaken = 0;
 
 
     void Start()
@@ -73,8 +74,6 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.deltaTime);
-
-        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -83,6 +82,20 @@ public class Movement : MonoBehaviour
         {
             isGrounded = true;
             isJumping = false;
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+           damageTaken += 30;
+
+            if (damageTaken>=maxHP)
+            {
+                Debug.Log("YOU DIED");
+            }
+            else
+            {
+                Debug.Log("Damage taken");
+            }
         }
     }
 
@@ -95,15 +108,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-           
-        }
-    }
 
     
 
