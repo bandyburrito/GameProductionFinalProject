@@ -13,9 +13,10 @@ public class Movement : MonoBehaviour
     public GameObject GunBullet;
     public GameObject GunSpawn;
     private bool isJumping;
-    public int GroundSlamSpeed = 10000;
-    private bool CanSlam;
-    private 
+    
+    private AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip shootingSound;
 
 
 
@@ -24,6 +25,8 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
+        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -46,30 +49,24 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
+            audioSource.PlayOneShot(jumpSound);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
-            transform.position += transform.right * 10f * Time.deltaTime;
+            transform.position += transform.up * 10f * Time.deltaTime;
+            audioSource.PlayOneShot(shootingSound);
 
             
         }
 
-        CanSlam = isGrounded == false && isJumping == true;
-        if (Input.GetKeyDown(KeyCode.LeftControl) && CanSlam)
-        {
-            rb.AddForce( Physics.gravity * rb.mass * GroundSlamSpeed * Time.deltaTime);
-        }
 
-    
     }
 
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.fixedDeltaTime);
-
-        
     }
 
     void OnCollisionEnter(Collision collision)

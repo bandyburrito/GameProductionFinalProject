@@ -23,18 +23,25 @@ public class bulletShoot : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.CompareTag("Ground"))
-        {             
+        if (other.CompareTag("Enemy"))
+        {
+            
             Destroy(gameObject);
+            Debug.Log("Bullet Destroyed");
         }
 
-        if(collision.gameObject.CompareTag("Enemy"))
-        {             
+
+        if (other.CompareTag("Ground"))
+        {
             Destroy(gameObject);
+            Debug.Log("Bullet Destroyed");
         }
     }
+
+
 
 
     

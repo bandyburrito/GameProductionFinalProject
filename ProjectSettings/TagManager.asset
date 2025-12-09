@@ -8,11 +8,12 @@ TagManager:
   - Enemy
   - Undefined
   - Shotgun
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NavMesh
   - Water
   - UI
   - 

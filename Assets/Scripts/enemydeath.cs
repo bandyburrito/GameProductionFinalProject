@@ -3,36 +3,55 @@ using UnityEngine;
 public class enemydeath : MonoBehaviour
 {
 
-    public float EnemyHP = 100;
-    public float DamageTaken = 35;
+    public float Health = 3;
+    public float DamageTaken = 1;
+    public AudioSource audiosource;
+    public AudioClip enemydeathsfx;
+    public GameObject deathParticles;
+    public Transform ParticleSpawner;
 
     
 
-    void Start()
-    {
-        
-    }
+    
 
     void Update()
     {
-       
+       audiosource = GetComponent<AudioSource>();
+
     }
 
-    void OnCollisionEnter(Collision collision)
+    
+        
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Shotgun"))
+       if (other.gameObject.tag == "Shotgun")
         {
-            EnemyHP -= DamageTaken;
-            Debug.Log("Enemy HP: " + EnemyHP);
+            Health -= DamageTaken; 
+            audiosource.PlayOneShot(enemydeathsfx);
+            Debug.Log("Enemy took Damage");
+
+            DeathSequence();
 
 
-            if (EnemyHP <= 0)
-            {
-                Destroy(gameObject);
-                Debug.Log("Enemy Destroyed");
-            }
+            
         }
+    
+    }    
+
+    void DeathSequence()
+    {
+        if (Health <= 0)
+            {
+                audiosource.PlayOneShot(enemydeathsfx);
+                GameObject DeathParticles =Instantiate(deathParticles,     // /object
+                ParticleSpawner.transform.position,            // /position
+                ParticleSpawner.transform.rotation);     // rot
+                Destroy(gameObject);
+                
+                
+            }
     }
+    
 }
 
 
