@@ -179,9 +179,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemydeath
   Health: 3
   DamageTaken: 1
+  audiosource: {fileID: 0}
   enemydeathsfx: {fileID: 8300000, guid: 2d60c12ef172ab8428874699ff439c3c, type: 3}
   deathParticles: {fileID: 8086482420861406750, guid: 358d6d68a2220474b9af3d75f9c04ce8, type: 3}
-  ParticleSpawner: {fileID: 2989256111452271658}
+  ParticleSpawner: {fileID: 3654479073058832728}
+  frequency: 5
+  magnitude: 5
 --- !u!4 &9166445319259174865 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b4441a165259c104eb237d9ee2f853c0, type: 3}

@@ -9,14 +9,35 @@ public class enemydeath : MonoBehaviour
     public AudioClip enemydeathsfx;
     public GameObject deathParticles;
     public Transform ParticleSpawner;
+    private float moveSpeed = 5f;
+    public float frequency = 5f;
+    public float magnitude = 5f;
 
-    
+    private Vector3 axis;
+    private Vector3 pos;
 
-    
+    void Start()
+    {
+        pos = gameObject.transform.position;
+        axis = gameObject.transform.position;
+    }
+
+
+
+
 
     void Update()
     {
        audiosource = GetComponent<AudioSource>();
+
+       axis += transform.forward * moveSpeed * Time.deltaTime;
+
+        // 2. Calculate the sine offset based on time
+        // We add this offset to the RIGHT axis (perpendicular to forward)
+        pos = axis + transform.right * Mathf.Sin(Time.time * frequency) * magnitude;
+
+        // 3. Apply the calculated position to the enemy
+        gameObject.transform.position = pos;
 
     }
 
@@ -43,13 +64,12 @@ public class enemydeath : MonoBehaviour
         if (Health <= 0)
             {
                 audiosource.PlayOneShot(enemydeathsfx);
-                GameObject DeathParticles =Instantiate(deathParticles,     // /object
-                ParticleSpawner.transform.position,            // /position
-                ParticleSpawner.transform.rotation);     // rot
-                Destroy(gameObject);
+                GameObject DeathParticles = Instantiate(deathParticles, ParticleSpawner.transform.position,ParticleSpawner.rotation);    
+                
                 
                 
             }
+            
     }
     
 }
