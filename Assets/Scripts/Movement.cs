@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEngine.Rendering;
 public class Movement : MonoBehaviour
 {
+    private float waitTime = 2f;
+    private float bulletsShot = 0f;
     private bool CharacterDied = false;
     public Image HealthBar;
     public float MAXHP = 100f;
@@ -22,6 +26,10 @@ public class Movement : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip shootingSound;
     public AudioClip HealthUP;
+    public GameObject Box1;
+    public GameObject Box2;
+    public AudioClip DOORSOPENED;
+
     
 
 
@@ -34,6 +42,8 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         audioSource = GetComponent<AudioSource>();
         audioSource = GetComponent<AudioSource>();
+        
+
     }
 
     void Update()
@@ -61,18 +71,26 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
-            transform.position += transform.up * 10f * Time.deltaTime;
-            audioSource.PlayOneShot(shootingSound);
-
-            
+            if (bulletsShot > 10)
+            {
+                ReloadTime();
+                bulletsShot =- 10f;
+            }
+            else{
+                Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
+                transform.position += transform.up * 10f * Time.deltaTime;
+                audioSource.PlayOneShot(shootingSound); 
+                bulletsShot += 1;
+            }
         }
 
-        if(CharacterDied == true)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            
+        Debug.Log("All enemies dead! LETS GO QIPITI");
+        DestoryBoxes();
+        audioSource.PlayOneShot(DOORSOPENED);
+       
         }
-
 
     }
 
@@ -126,4 +144,31 @@ public class Movement : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    private IEnumerator ReloadTime()
+    {
+        yield return new WaitForSeconds(waitTime);
+        
+        
+
     }
+
+    public void DestoryBoxes()
+    {
+        Destroy(Box1);
+        Destroy(Box2);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Transport"))
+        {
+            SceneManager.LoadScene(2);
+        }
+    }
+
+   
+
+   
+
+}
+

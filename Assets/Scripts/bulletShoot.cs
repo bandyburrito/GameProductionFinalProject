@@ -28,7 +28,7 @@ public class bulletShoot : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             Debug.Log("Bullet Destroyed");
         }
 
