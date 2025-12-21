@@ -8,6 +8,13 @@ TagManager:
   - Enemy
   - Undefined
   - Shotgun
+<<<<<<< Updated upstream
+=======
+  - Wall
+  - HealthPack
+  - Transport
+  - Music
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
