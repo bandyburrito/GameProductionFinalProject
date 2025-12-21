@@ -10,6 +10,7 @@ TagManager:
   - Shotgun
   - Wall
   - HealthPack
+  - Transport
   layers:
   - Default
   - TransparentFX
