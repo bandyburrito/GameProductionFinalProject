@@ -1,15 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 public class Movement : MonoBehaviour
 {
-    private bool CharacterDied = false;
-    public Image HealthBar;
-    public float MAXHP = 100f;
-    public float DamageTaken = 20f;
     public float movespeed = 10f;
     public Rigidbody rb;
-    public float jumpSpeed = 25f;
+    public float jumpSpeed = 10f;
     public float MouseSensitivity = 2f; 
     public Transform playerCamera; 
     private Vector2 turn;
@@ -18,22 +13,18 @@ public class Movement : MonoBehaviour
     public GameObject GunBullet;
     public GameObject GunSpawn;
     private bool isJumping;
-    private AudioSource audioSource;
-    public AudioClip jumpSound;
-    public AudioClip shootingSound;
-    public AudioClip HealthUP;
-    
-
-
+    public int GroundSlamSpeed = 10000;
+    private bool CanSlam;
+    public float gravMultiplier;
+    public float maxHP;
+    public float damageTaken = 0;
+    public ParticleSystem muzzleFlash;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
-        audioSource = GetComponent<AudioSource>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -56,29 +47,33 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-            audioSource.PlayOneShot(jumpSound);
+        }
+
+        if (rb.linearVelocity.y<0)
+        {
+            rb.AddForce(Vector3.down * gravMultiplier * Time.deltaTime, ForceMode.Impulse);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
+            muzzleFlash.Play();
+
             Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
-            transform.position += transform.up * 10f * Time.deltaTime;
-            audioSource.PlayOneShot(shootingSound);
-
-            
+            transform.position += transform.right * 10f * Time.deltaTime;
         }
 
-        if(CharacterDied == true)
+        CanSlam = isGrounded == false && isJumping == true;
+        if (Input.GetKeyDown(KeyCode.LeftControl) && CanSlam)
         {
-            
+            rb.AddForce( Physics.gravity * rb.mass * GroundSlamSpeed * Time.deltaTime);
         }
 
-
+    
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -91,27 +86,19 @@ public class Movement : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            MAXHP -= DamageTaken;
-            HealthBar.fillAmount -= 0.20f;
-            Debug.Log("Player took Damage");
+           damageTaken += 30;
 
-            if (MAXHP <= 0)
+            if (damageTaken>=maxHP)
             {
-                Destroy(gameObject);
-                CharacterDied = true;
-                DeathManager();
+                Debug.Log("YOU DIED");
+            }
+            else
+            {
+                Debug.Log("Damage taken");
             }
         }
-
-        if (collision.gameObject.CompareTag("HealthPack") && MAXHP < 100f)
-        {
-            MAXHP += 20f;
-            HealthBar.fillAmount += 0.20f;
-            audioSource.PlayOneShot(HealthUP);
-           
-
-        }
     }
+
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -121,9 +108,9 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void DeathManager()
-    {
-        SceneManager.LoadScene(1);
-    }
 
-    }
+    
+
+    
+    
+}
