@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class enemydeath : MonoBehaviour
 {
 
-    public float Health = 3;
+    public Image HealthBar;
+    public float HealthAmount = 100f;
+    
+
+    public float Health = 9;
     public float DamageTaken = 1;
     public AudioSource audiosource;
     public AudioClip enemydeathsfx;
@@ -15,30 +21,25 @@ public class enemydeath : MonoBehaviour
 
     private Vector3 axis;
     private Vector3 pos;
+    public GameObject Box1;
+    public GameObject Box2;
+    private float EnemyKilled;
+    
 
     void Start()
     {
-        pos = gameObject.transform.position;
-        axis = gameObject.transform.position;
+        
+        
+        
+
+
+
+
     }
-
-
-
-
-
     void Update()
     {
        audiosource = GetComponent<AudioSource>();
-
-       axis += transform.forward * moveSpeed * Time.deltaTime;
-
-        // 2. Calculate the sine offset based on time
-        // We add this offset to the RIGHT axis (perpendicular to forward)
-        pos = axis + transform.right * Mathf.Sin(Time.time * frequency) * magnitude;
-
-        // 3. Apply the calculated position to the enemy
-        gameObject.transform.position = pos;
-
+       
     }
 
     
@@ -51,26 +52,32 @@ public class enemydeath : MonoBehaviour
             audiosource.PlayOneShot(enemydeathsfx);
             Debug.Log("Enemy took Damage");
 
-            DeathSequence();
+
+            if (Health <= 0)
+            {
+            Instantiate(deathParticles, gameObject.transform.position, gameObject.transform.rotation);    
+            Destroy(gameObject.GetComponent<SkinnedMeshRenderer>());
+            Debug.Log("Enemy Skin Removed");
+            Destroy(gameObject);
+            Debug.Log("Enemy Killed after 3 seconds");
+            }
+            
+
+
+            
 
 
             
         }
     
-    }    
-
-    void DeathSequence()
-    {
-        if (Health <= 0)
-            {
-                audiosource.PlayOneShot(enemydeathsfx);
-                GameObject DeathParticles = Instantiate(deathParticles, ParticleSpawner.transform.position,ParticleSpawner.rotation);    
-                
-                
-                
-            }
-            
     }
+
+    
+
+
+    
+
+
     
 }
 

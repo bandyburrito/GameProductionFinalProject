@@ -28,17 +28,23 @@ public class bulletShoot : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            
             Destroy(gameObject);
             Debug.Log("Bullet Destroyed");
         }
-
 
         if (other.CompareTag("Ground"))
         {
             Destroy(gameObject);
             Debug.Log("Bullet Destroyed");
         }
+
+        if (other.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+            Debug.Log("Bullet Destroyed");
+        }
+
+
     }
 
 

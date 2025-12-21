@@ -1,10 +1,15 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour
 {
+    private bool CharacterDied = false;
+    public Image HealthBar;
+    public float MAXHP = 100f;
+    public float DamageTaken = 20f;
     public float movespeed = 10f;
     public Rigidbody rb;
-    public float jumpSpeed = 10f;
+    public float jumpSpeed = 25f;
     public float MouseSensitivity = 2f; 
     public Transform playerCamera; 
     private Vector2 turn;
@@ -13,16 +18,18 @@ public class Movement : MonoBehaviour
     public GameObject GunBullet;
     public GameObject GunSpawn;
     private bool isJumping;
-    
     private AudioSource audioSource;
     public AudioClip jumpSound;
     public AudioClip shootingSound;
+    public AudioClip HealthUP;
+    
 
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
         audioSource = GetComponent<AudioSource>();
@@ -48,7 +55,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
-            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
             audioSource.PlayOneShot(jumpSound);
         }
 
@@ -58,6 +65,11 @@ public class Movement : MonoBehaviour
             transform.position += transform.up * 10f * Time.deltaTime;
             audioSource.PlayOneShot(shootingSound);
 
+            
+        }
+
+        if(CharacterDied == true)
+        {
             
         }
 
@@ -76,8 +88,30 @@ public class Movement : MonoBehaviour
             isGrounded = true;
             isJumping = false;
         }
-    }
 
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            MAXHP -= DamageTaken;
+            HealthBar.fillAmount -= 0.20f;
+            Debug.Log("Player took Damage");
+
+            if (MAXHP <= 0)
+            {
+                Destroy(gameObject);
+                CharacterDied = true;
+                DeathManager();
+            }
+        }
+
+        if (collision.gameObject.CompareTag("HealthPack") && MAXHP < 100f)
+        {
+            MAXHP += 20f;
+            HealthBar.fillAmount += 0.20f;
+            audioSource.PlayOneShot(HealthUP);
+           
+
+        }
+    }
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -87,12 +121,9 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void DeathManager()
+    {
+        SceneManager.LoadScene(1);
+    }
 
-
-    
-
-    
-
-    
-    
-}
+    }
