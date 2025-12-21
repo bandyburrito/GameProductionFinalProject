@@ -1,11 +1,14 @@
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.RenderGraphModule;
 
 public class enemyScript : MonoBehaviour
 {
 
-    public GameObject character;
+    
+
+    private GameObject character;
     public float enemyMoveSpeed = 15f;
     public Rigidbody rb;
     private quaternion attackRotation;
@@ -13,7 +16,7 @@ public class enemyScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        character = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame

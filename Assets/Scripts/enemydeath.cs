@@ -11,6 +11,7 @@ public class enemydeath : MonoBehaviour
     void Start()
     {
         CurrentHP = MaxHP;
+        character = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame

@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     public float gravMultiplier;
     public float maxHP;
     public float damageTaken = 0;
-
+    public ParticleSystem muzzleFlash;
 
     void Start()
     {
@@ -56,10 +56,10 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            muzzleFlash.Play();
+
             Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
             transform.position += transform.right * 10f * Time.deltaTime;
-
-            
         }
 
         CanSlam = isGrounded == false && isJumping == true;
