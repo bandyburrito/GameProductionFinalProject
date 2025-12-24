@@ -19,20 +19,20 @@ public class bulletShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += transform.forward * bulletspeed * Time.fixedDeltaTime;   
+        transform.position += transform.forward * bulletspeed * Time.fixedDeltaTime;  
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             Destroy(this.gameObject);
             Debug.Log("Bullet Destroyed");
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 

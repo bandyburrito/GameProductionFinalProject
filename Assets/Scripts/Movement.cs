@@ -84,7 +84,21 @@ public class Movement : MonoBehaviour
             isJumping = false;
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+            isJumping = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
         {
            damageTaken += 30;
 
@@ -99,18 +113,9 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-            isJumping = true;
-        }
-    }
 
 
-    
 
-    
-    
+
+
 }

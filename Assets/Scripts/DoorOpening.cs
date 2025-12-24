@@ -14,6 +14,10 @@ public class DoorOpening : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        {
+            Destroy(Box1);
+            Destroy(Box2);
+        }
     }
 }
