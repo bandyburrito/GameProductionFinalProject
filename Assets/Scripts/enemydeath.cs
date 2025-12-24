@@ -1,93 +1,37 @@
+using NUnit.Framework.Internal;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 public class enemydeath : MonoBehaviour
 {
-
-    public Image HealthBar;
-    public float HealthAmount = 100f;
-    
-
-    public float Health = 9;
-    public float DamageTaken = 1;
-    public AudioSource audiosource;
-    public AudioClip enemydeathsfx;
-    public GameObject deathParticles;
-    public Transform ParticleSpawner;
-    private float moveSpeed = 5f;
-    public float frequency = 5f;
-    public float magnitude = 5f;
-
-    private Vector3 axis;
-    private Vector3 pos;
-    public GameObject Box1;
-    public GameObject Box2;
-    private float EnemyKilled;
-    
+    public int MaxHP = 100;
+    private int CurrentHP;
+    private int DamageTaken = 0;
+    public GameObject character;
 
     void Start()
     {
-        
-        
-        
-
-
-
-
-    }
-    void Update()
-    {
-       audiosource = GetComponent<AudioSource>();
-       
+        CurrentHP = MaxHP;
+        character = GameObject.FindGameObjectWithTag("Player");
     }
 
-    
-        
-    private void OnTriggerEnter(Collider other)
+    // Update is called once per frame
+    void FixedUpdate()
     {
-       if (other.gameObject.tag == "Shotgun")
+        CurrentHP = MaxHP - DamageTaken;
+
+        if (CurrentHP<=0)
         {
-            Health -= DamageTaken; 
-            audiosource.PlayOneShot(enemydeathsfx);
-            Debug.Log("Enemy took Damage");
-
-
-            if (Health <= 0)
-            {
-            Instantiate(deathParticles, gameObject.transform.position, gameObject.transform.rotation);    
-            Destroy(gameObject.GetComponent<SkinnedMeshRenderer>());
-            Debug.Log("Enemy Skin Removed");
             Destroy(gameObject);
-            Debug.Log("Enemy Killed after 3 seconds");
-            }
-            
-
-
-            
-
-
-            
+            DamageTaken = 0;
+            Instantiate(gameObject, new Vector3(character.transform.position.x +- Random.Range(10,40), -100, character.transform.position.z +- Random.Range(10,40)), transform.rotation);
         }
-    
     }
 
-    
-
-
-    
-
-
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            DamageTaken += 50;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-

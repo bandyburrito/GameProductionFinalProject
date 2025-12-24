@@ -24,24 +24,30 @@ public class EnemyAI : MonoBehaviour
     }
 
     void Update()
-    {
-        // 3. Calculate distance between Enemy and Player
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+{
+    if (!player) return;
 
-        // 4. Logic: Decide what to do based on distance
-        if (distanceToPlayer <= chaseRange && distanceToPlayer > attackRange)
-        {
-            ChasePlayer();
-        }
-        else if (distanceToPlayer <= attackRange)
-        {
-            AttackPlayer();
-        }
-        else
-        {
-            StopChasing();
-        }
+    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+    if (distanceToPlayer <= chaseRange && distanceToPlayer > attackRange)
+    {
+        agent.SetDestination(player.position);
     }
+    else if (distanceToPlayer <= attackRange)
+    {
+        agent.SetDestination(transform.position);
+    }
+    else
+    {
+        agent.ResetPath();
+    }
+
+    if (agent.pathStatus == NavMeshPathStatus.PathPartial)
+    {
+        agent.ResetPath();
+    }
+}
+
 
     void ChasePlayer()
     {
@@ -50,19 +56,17 @@ public class EnemyAI : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    void AttackPlayer()
-    {
-        // Stop moving so we can attack
-        agent.isStopped = true;
-        // (Add attack logic or animation code here later)
-        Debug.Log("Attacking!"); 
-    }
+   void AttackPlayer()
+{
+    agent.SetDestination(transform.position); // Freeze in place
+    Debug.Log("Attacking!");
+}
 
-    void StopChasing()
-    {
-        // Stop moving if player is too far away
-        agent.isStopped = true;
-    }
+void StopChasing()
+{
+    agent.ResetPath(); // Clears bad paths
+}
+
     
     // Visualize the ranges in the Scene view for easy debugging
     void OnDrawGizmosSelected()

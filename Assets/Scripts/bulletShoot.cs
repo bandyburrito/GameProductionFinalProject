@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 
 public class bulletShoot : MonoBehaviour
 {
 
-    [SerializeField] public float bulletspeed = 20f;
+    [SerializeField] public float bulletspeed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,41 +19,22 @@ public class bulletShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-    transform.position += transform.up * bulletspeed * Time.fixedDeltaTime ;   
+        transform.position += transform.forward * bulletspeed * Time.fixedDeltaTime;   
     }
 
-
-
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(this.gameObject);
             Debug.Log("Bullet Destroyed");
         }
 
-        if (other.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(gameObject);
-            Debug.Log("Bullet Destroyed");
         }
-
-        if (other.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-            Debug.Log("Bullet Destroyed");
-        }
-
-
     }
-
-
-
-
-    
-
-
-    
 
 
 
