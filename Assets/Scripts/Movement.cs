@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class Movement : MonoBehaviour
     public float maxHP;
     public float damageTaken = 0;
     public ParticleSystem muzzleFlash;
+    public Image healthBar;
 
     void Start()
     {
@@ -74,6 +77,7 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveDirection.normalized * movespeed * Time.deltaTime);
+        healthBar.fillAmount = (maxHP-damageTaken) / 100f;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -84,7 +88,10 @@ public class Movement : MonoBehaviour
             isJumping = false;
         }
 
-        
+        if (collision.gameObject.CompareTag("HealthPack"))
+        {
+            damageTaken -= 20;
+        }
     }
 
     void OnCollisionExit(Collision collision)
@@ -105,17 +112,17 @@ public class Movement : MonoBehaviour
             if (damageTaken>=maxHP)
             {
                 Debug.Log("YOU DIED");
+                SceneManager.LoadScene(1);
             }
             else
             {
                 Debug.Log("Damage taken");
             }
         }
+
+        if (other.gameObject.CompareTag("Transport"))
+        {
+            SceneManager.LoadScene(2);
+        }
     }
-
-
-
-
-
-
 }

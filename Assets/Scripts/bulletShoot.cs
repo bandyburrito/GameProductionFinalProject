@@ -24,6 +24,12 @@ public class bulletShoot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+            Debug.Log("Bullet Destroyed");
+        }
+
         if (other.gameObject.CompareTag("Ground"))
         {
             Destroy(this.gameObject);

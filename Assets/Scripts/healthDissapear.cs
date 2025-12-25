@@ -20,8 +20,7 @@ public class healthDissapear : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-        
-        Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

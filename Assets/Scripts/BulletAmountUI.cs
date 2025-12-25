@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro; // Needed for the UI Text
-using System.Collections; // Needed for the 2-second wait (Coroutine)
+using System.Collections;
+using UnityEditor.ShaderGraph; // Needed for the 2-second wait (Coroutine)
 
 public class BulletAmountUI : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class BulletAmountUI : MonoBehaviour
         {
             Shoot();
         }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+        }
     }
 
     void Shoot()
@@ -46,6 +52,11 @@ public class BulletAmountUI : MonoBehaviour
         // -- Add your actual shooting code here (Raycast or Instantiate) --
         Debug.Log("Bang!");
 
+        if (currentAmmo <= 1)
+        {
+            ammoText.color = Color.red;
+        }
+
         // 3. Check if we ran out of ammo
         if (currentAmmo <= 0)
         {
@@ -58,6 +69,7 @@ public class BulletAmountUI : MonoBehaviour
     {
         isReloading = true;
         ammoText.text = "Reloading...";
+        ammoText.color = Color.red;
         Debug.Log("Reloading...");
 
         // 4. Wait for 2 seconds
@@ -69,11 +81,13 @@ public class BulletAmountUI : MonoBehaviour
         
         UpdateAmmoUI();
         Debug.Log("Ready to fire!");
+
+        ammoText.color = Color.white;
     }
 
     void UpdateAmmoUI()
     {
         // Updates the text to show "5 / 10"
-        ammoText.text = currentAmmo + " / " + maxAmmo;
+        ammoText.text = currentAmmo + "/" + maxAmmo;
     }
 }
