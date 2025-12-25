@@ -4,6 +4,8 @@ public class DoorOpening : MonoBehaviour
 {
     public GameObject Box1;
     public GameObject Box2;
+    public AudioSource audioSource;
+    public AudioClip doorExplosion;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +20,10 @@ public class DoorOpening : MonoBehaviour
         {
             Destroy(Box1);
             Destroy(Box2);
+
+            audioSource.PlayOneShot(doorExplosion);
+
+            this.enabled = false;
         }
     }
 }

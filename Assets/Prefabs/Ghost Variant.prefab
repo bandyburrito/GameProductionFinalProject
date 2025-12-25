@@ -772,18 +772,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dce35def52fe7a4db96d85ee69a4e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemydeath
-  HealthBar: {fileID: 0}
-  HealthAmount: 100
-  Health: 3
-  DamageTaken: 1
-  audiosource: {fileID: 6503395970911091634}
-  enemydeathsfx: {fileID: 8300000, guid: 2d60c12ef172ab8428874699ff439c3c, type: 3}
-  deathParticles: {fileID: 8086482420861406750, guid: 358d6d68a2220474b9af3d75f9c04ce8, type: 3}
-  ParticleSpawner: {fileID: 332183259366036113}
-  frequency: 5
-  magnitude: 5
-  Box1: {fileID: 0}
-  Box2: {fileID: 0}
+  MaxHP: 100
+  character: {fileID: 0}
+  audioSource: {fileID: 6503395970911091634}
+  deathSFX: {fileID: 8300000, guid: 99dba28e9ef8216489ff9984784ea1ce, type: 3}
 --- !u!195 &3840758192332450693
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -794,10 +786,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 60
+  m_Speed: 120
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -833,7 +825,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -845,7 +837,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

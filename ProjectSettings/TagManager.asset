@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - HealthPack
   - Transport
+  - Music
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,8 @@ public class enemydeath : MonoBehaviour
     public int MaxHP = 100;
     private int CurrentHP;
     public GameObject character;
+    public AudioSource audioSource;
+    public AudioClip deathSFX;
 
     void Start()
     {
@@ -18,7 +20,7 @@ public class enemydeath : MonoBehaviour
     {
         if (CurrentHP<=0)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.3f);
         }
     }
 
@@ -27,6 +29,11 @@ public class enemydeath : MonoBehaviour
         if (other.CompareTag("Shotgun"))
         {
             CurrentHP -= 20;
+        }
+
+        if (CurrentHP<=0)
+        {
+            audioSource.PlayOneShot(deathSFX);
         }
     }
 }

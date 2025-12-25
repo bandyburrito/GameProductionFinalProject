@@ -22,6 +22,11 @@ public class Movement : MonoBehaviour
     public float damageTaken = 0;
     public ParticleSystem muzzleFlash;
     public Image healthBar;
+    public AudioSource audioSource;
+    public AudioClip shootingSFX;
+    public AudioClip jumpingSFX;
+    public AudioClip healingSFX;
+    public AudioClip damageSFX;
 
     void Start()
     {
@@ -50,6 +55,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            audioSource.PlayOneShot(jumpingSFX);
         }
 
         if (rb.linearVelocity.y<0)
@@ -60,6 +66,7 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             muzzleFlash.Play();
+            audioSource.PlayOneShot(shootingSFX);
 
             Instantiate(GunBullet, GunSpawn.transform.position, GunSpawn.transform.rotation);
             transform.position += transform.right * 10f * Time.deltaTime;
@@ -91,6 +98,7 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.CompareTag("HealthPack"))
         {
             damageTaken -= 20;
+            audioSource.PlayOneShot(healingSFX);
         }
     }
 
@@ -107,8 +115,9 @@ public class Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-           damageTaken += 30;
-
+            damageTaken += 30;
+            audioSource.PlayOneShot(damageSFX);
+            
             if (damageTaken>=maxHP)
             {
                 Debug.Log("YOU DIED");
